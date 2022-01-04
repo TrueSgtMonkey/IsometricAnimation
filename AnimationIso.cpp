@@ -4,10 +4,20 @@
 int AnimationIso::animation(int stFrame, int maxFrame)
 {
 	//play the animation normally if stFrame is less
-	if(stFrame < maxFrame) frameNum += 1;
+	if(stFrame < maxFrame)
+	{
+		frameNum += 1;
+		if(frameNum >= maxFrame) 
+			frameNum = stFrame;
+	}
 	//play the animation backwards if maxFrame is less
-	else if(stFrame > maxFrame) frameNum -= 1;
-	if(frameNum == maxFrame) frameNum = stFrame;	//resets at last frame
+	else if(stFrame > maxFrame) 
+	{
+		frameNum -= 1;
+		if(frameNum <= maxFrame && frameNum <= 0)
+			frameNum = stFrame;
+	}
+	
 	return frameNum;
 }
 
@@ -15,8 +25,19 @@ int AnimationIso::isoAnimation(int hframes, int frame, int stFrame, int offset)
 {
 	if(offset < 0)
 		return -1;
+	
+	//getting the curr frame in the current animation (outside of angles)
 	int currFrame = getFrameNumber() % hframes;
-	setFrameNumber((currFrame) + frame * hframes);
+	
+	//setting the frame number to the right angle + curr frame in animation
+	frameNum = currFrame + (frame * hframes);
+	
+	//picking which row we want to start from to look 8 angles ahead
+	frameNum += stFrame;
+	
+	//setting the next frame to this for some reason
+	// (unsure why we don't just return frameNum, but who knows)
+	// frame number will be added or subtracted by one anyways
 	int nextFrame = frameNum;
 	switch(frame)
 	{
