@@ -35,10 +35,9 @@ int AnimationIso::isoAnimation(int hframes, int frame, int stFrame, int offset)
 	//picking which row we want to start from to look 8 angles ahead
 	frameNum += stFrame;
 	
-	//setting the next frame to this for some reason
-	// (unsure why we don't just return frameNum, but who knows)
-	// frame number will be added or subtracted by one anyways
 	int nextFrame = frameNum;
+    
+    // Each frame respresents angle (0 = east, 2 = north, 4 = west, 6 = south)
 	switch(frame)
 	{
 		case 0:
